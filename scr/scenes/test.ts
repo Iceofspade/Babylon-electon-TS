@@ -24,7 +24,7 @@ export let app ={
     button1.cornerRadius = 20;
     button1.background = "green";
     button1.onPointerUpObservable.add(function() {
-        alert("you did it!");
+        alert("Scene loaded Correctly!!");
     });
     advancedTexture.addControl(button1);    
     return scene

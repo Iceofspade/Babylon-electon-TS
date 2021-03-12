@@ -27,16 +27,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.handler = void 0;
 const BABYLON = __importStar(require("babylonjs"));
 const fs_1 = require("fs");
+const path_1 = __importDefault(require("path"));
 class SceneHandler {
     constructor() {
         this.sceneList = [];
         //Get the name of all files that have a scene that can be rendered
         this.loadScenes = () => __awaiter(this, void 0, void 0, function* () {
-            this.sceneList = fs_1.readdirSync("./app/scenes/").filter(d => d.endsWith(".js"));
+            this.sceneList = fs_1.readdirSync(path_1.default.join(__dirname, "scenes")).filter(d => d.endsWith(".js"));
         });
         //Set the canvas for everything to be rendered on
         this.setCanvas = (canvas) => __awaiter(this, void 0, void 0, function* () {
@@ -58,14 +61,21 @@ class SceneHandler {
         // Setting the new scene to render
         this.setScene = (sceneName) => __awaiter(this, void 0, void 0, function* () {
             this.loadScenes().then(() => {
-                let i = this.sceneList.indexOf(sceneName + ".js");
-                if (i === -1) {
-                    console.error("Attempted to load none existing scene");
-                    this.scene = this.defaultScene();
-                }
-                else if (i > -1) {
-                    let pull = require(`./scenes/${this.sceneList[i]}`);
-                    this.scene = pull.app.scene(this.engine, this.canvas);
+                let i = 1;
+                for (let scene of this.sceneList) {
+                    let pulledScene = require(path_1.default.join(__dirname, `scenes/${scene}`));
+                    if (pulledScene.app.name === sceneName) {
+                        this.scene != undefined ? (this.scene.dispose(), this.scene = pulledScene.app.scene(this.engine, this.canvas))
+                            : this.scene = pulledScene.app.scene(this.engine, this.canvas);
+                        break;
+                    }
+                    else if (i === this.sceneList.length && this.scene === undefined) {
+                        console.error(`Attempted to load none existing scene.
+                "${sceneName}" does not belong to any scene name.
+                Switching to default scene.`);
+                        this.scene = this.defaultScene();
+                    }
+                    i++;
                 }
             });
         });
@@ -83,15 +93,16 @@ class SceneHandler {
         });
     }
 }
-exports.handler = new SceneHandler();
+let handler = new SceneHandler();
+exports.default = handler;
 window.addEventListener('DOMContentLoaded', function () {
-    exports.handler.setCanvas(document.getElementById('renderCanvas')).then(() => {
+    handler.setCanvas(document.getElementById('renderCanvas')).then(() => {
         //Rename test to what ever you want the starting scene to be      
-        exports.handler.setScene("test").then(() => {
-            exports.handler.initialize();
+        handler.setScene("testScene").then(() => {
+            handler.initialize();
         });
         window.addEventListener('resize', function () {
-            exports.handler.engine == null ? console.error("Cannot resize engine or null") : exports.handler.engine.resize();
+            handler.engine == null ? console.error("Cannot resize engine or null") : handler.engine.resize();
         });
     });
 });
