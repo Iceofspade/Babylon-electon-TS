@@ -79,7 +79,7 @@ export default handler
     window.addEventListener('DOMContentLoaded', function(){
         handler.setCanvas(document.getElementById('renderCanvas') as HTMLCanvasElement).then(()=>{
             //Rename test to what ever you want the starting scene to be      
-            handler.setScene("testScene").then(()=>{
+            handler.setScene("menuScene").then(()=>{
                     handler.initialize()
             })
             
