@@ -39,7 +39,7 @@ class SceneHandler {
         this.sceneList = [];
         //Get the name of all files that have a scene that can be rendered
         this.loadScenes = () => __awaiter(this, void 0, void 0, function* () {
-            this.sceneList = (0, fs_1.readdirSync)(path_1.default.join(__dirname, "scenes")).filter(d => d.endsWith(".js"));
+            this.sceneList = fs_1.readdirSync(path_1.default.join(__dirname, "scenes")).filter(d => d.endsWith(".js"));
         });
         //Set the canvas for everything to be rendered on
         this.setCanvas = (canvas) => __awaiter(this, void 0, void 0, function* () {
@@ -98,7 +98,7 @@ exports.default = handler;
 window.addEventListener('DOMContentLoaded', function () {
     handler.setCanvas(document.getElementById('renderCanvas')).then(() => {
         //Rename test to what ever you want the starting scene to be      
-        handler.setScene("menuScene").then(() => {
+        handler.setScene("testScene").then(() => {
             handler.initialize();
         });
         window.addEventListener('resize', function () {

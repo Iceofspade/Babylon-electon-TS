@@ -10,8 +10,8 @@ let win;
 let createWindow = () => {
     // Create the browser window.
     win = new electron_1.BrowserWindow({
-        height: 720,
-        width: 1280,
+        height: 600,
+        width: 800,
         webPreferences: {
             nodeIntegration: true
         }
@@ -36,7 +36,6 @@ let createWindow = () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-electron_1.app.on("ready", createWindow);
 electron_1.app.on("ready", createWindow);
 // Quit when all windows are closed.
 electron_1.app.on("window-all-closed", () => {

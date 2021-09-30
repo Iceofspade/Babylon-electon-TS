@@ -7,8 +7,8 @@ let win:BrowserWindow|null;
 let createWindow = () => {
   // Create the browser window.
   win = new BrowserWindow({
-    height: 720,
-    width: 1280,
+    height: 600,
+    width: 800,
     webPreferences: {
     nodeIntegration: true
     }
@@ -37,8 +37,6 @@ let createWindow = () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow);
-app.on("ready", createWindow);
-
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
