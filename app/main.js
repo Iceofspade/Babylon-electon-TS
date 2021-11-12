@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const path_1 = __importDefault(require("path"));
 const url_1 = __importDefault(require("url"));
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 let win;
 let createWindow = () => {
     // Create the browser window.
@@ -13,7 +14,8 @@ let createWindow = () => {
         height: 600,
         width: 800,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false
         }
         // icon:"img/dice.png"
     });

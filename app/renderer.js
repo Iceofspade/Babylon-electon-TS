@@ -49,6 +49,7 @@ class SceneHandler {
         //A deafault scene to fall back on if an attempt load a scene fails
         this.defaultScene = () => {
             let scene = new BABYLON.Scene(this.engine);
+            scene.debugLayer.show();
             let camera = new BABYLON.FreeCamera("Camera1", new BABYLON.Vector3(0, 10, -10), scene);
             camera.attachControl(true);
             camera.setTarget(BABYLON.Vector3.Zero());

@@ -2,6 +2,7 @@ import {app, BrowserWindow} from'electron'
 import path from 'path'
 import url from 'url'
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 
 let win:BrowserWindow|null;
 let createWindow = () => {
@@ -10,8 +11,10 @@ let createWindow = () => {
     height: 600,
     width: 800,
     webPreferences: {
-    nodeIntegration: true
+    nodeIntegration: true,
+    contextIsolation: false
     }
+
     // icon:"img/dice.png"
   });
 
